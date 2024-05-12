@@ -1,0 +1,9 @@
+epochs = 800
+lstm_hidden = 16
+out_channels1 = 8
+out_channels2 = 8
+out_channels3 = 16
+out_channels4 = 16
+fc1_out = 32
+chb01
+0.5575539568345323	
