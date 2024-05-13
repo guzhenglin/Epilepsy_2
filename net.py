@@ -101,6 +101,7 @@ class net_freq60_1d_nopad(nn.Module):
         # x = x.reshape(b, h)
 
         batch_shape = x.size(0)
+        # print("test1: ", x.shape)
         x = x.contiguous().view(batch_shape, -1)
         # print("1.3C:", x_c.shape)
         #x = self.dropout(x)

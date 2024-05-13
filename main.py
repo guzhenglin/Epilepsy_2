@@ -2,6 +2,9 @@
 
 # 按 Shift+F10 执行或将其替换为您的代码。
 # 按 双击 Shift 在所有地方搜索类、文件、工具窗口、操作和设置。
+import onnx
+import onnxruntime
+
 import argparse
 
 import h5py
@@ -18,12 +21,14 @@ def infer_test(test_dataloader, patient_index, lstm_hidden, lstm_step, fc1_out):
     device = torch.device('cuda')
     #model = Net(lstm_hidden, lstm_step, fc1_out).to(device)
     model = torch.load('net_model.pth').to(device)
+    # model = onnx.load('test.onnx')
+    # sess = onnxruntime.InferenceSession('test.onnx')
     # model = torch.load('net_model_chb06.pth')
     # model.load_state_dict(torch.load('net.pth'))
     # model.load_state_dict(model_dict)
     # print(*list(model.children())[-3:-2])
 
-    # print(model)
+    print(model)
     model.load_state_dict(torch.load('net.pth'))
     model.eval()
     with torch.no_grad():
@@ -33,8 +38,11 @@ def infer_test(test_dataloader, patient_index, lstm_hidden, lstm_step, fc1_out):
         for idx, (x, label) in enumerate(test_dataloader, 1):
             # if idx <= 100:
             x, label = x.to(device), label.to(device)
+            # print("test1:",x.shape)
 
             logits = model(x)
+            # print("test2:",logits.type)
+            # logits = sess.run(None, {'input': x.cpu().numpy()})
             pred = logits.argmax(dim=1)
             print("probability:",logits)
 
@@ -355,7 +363,7 @@ if __name__ == '__main__':
 
     epoch_arg=args.epochs
 
-    batch_size = 64
+    batch_size = 1
     win_len = 256
     overlap_len = 128
 

@@ -199,6 +199,7 @@ def generate_data_k_fold_train_withfake(file_path_folder, index, k_list, win_len
         x_tensor = torch.tensor(x_)
         y_tensor = torch.tensor(y_)
         x_tensor = x_tensor.permute(0, 3, 1, 2)
+        x_=x_tensor.numpy()
         # x_tensor = x_tensor.permute(1, 4, 0, 2, 3)
         x_tensor1 = normalize_to(x_tensor)
         print("x_tensor1.shape:", x_tensor1.shape)
@@ -250,6 +251,6 @@ def generate_data_k_fold_test(file_path_folder, index, k_index, win_len, overlap
         # x_tensor = x_tensor.permute(1, 4, 0, 2, 3)
         x_tensor1 = normalize_to(x_tensor)
         print("x_tensor1.shape:", x_tensor1.shape)
-        my_dataset = MyDataset(x_tensor1, y_tensor)
+        my_dataset = MyDataset(x_tensor, y_tensor)
         return my_dataset
 
